@@ -129,7 +129,7 @@ public class MarketUI extends JPanel {
 		m.addOnStore(newt, 50);
 		
 		this.setLayout(new GridBagLayout());
-		JFrame frame = new JFrame("Petshop");
+		final JFrame frame = new JFrame("Petshop");
 		frame.setBounds(350, 50, 300, 500);
 		frame.setContentPane(this);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -201,6 +201,7 @@ public class MarketUI extends JPanel {
 				}
 				m.sell("Today", cu, cu.getBucket());
 				m.printTransactions();
+
 			}
 		});
 		frame.pack();

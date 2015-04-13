@@ -1,5 +1,8 @@
 package com.kademika.day8.frame16;
 
+import javax.swing.*;
+import javax.swing.table.TableColumn;
+import java.awt.*;
 import java.io.ObjectOutputStream.PutField;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -79,11 +82,14 @@ public class Market {
 		for (int i=0, j=1; i < a.size(); i++) {
 			if (i == 0) {
                 result += a.get(i).getName();
-            } else if (a.get(i).equals(a.get(i-1))) {
+            } else if (a.get(i).equals(a.get(i-1)) && i != a.size()-1) {
                 j++;
-            } else {
+            } else if (!a.get(i).equals(a.get(i-1))){
                 result += "(x" + j +  "), " + a.get(i).getName();
                 j=1;
+            } else {
+                j++;
+                result += "(x" + j +  ")";
             }
 		}
 		return result;
@@ -91,12 +97,36 @@ public class Market {
 	
 	public void printTransactions() {
 		int i = 1;
+        Object[][] data = new Object[100][5];
 		for (Purchase pur : purchases) {
-			if (pur.getDate().equals("Today")) {
-				System.out.println(i + ". " + pur.getCustomer().getName() + " " + getGoodsNames(pur.getGoods()) + "\tPrice: " + pur.getPrice());
-				i++;
-			}
+            data[i-1][0] = i;
+            data[i-1][1] = "Today";
+            data[i-1][2] = pur.getCustomer().getName();
+            data[i-1][3] = getGoodsNames(pur.getGoods());
+            data[i-1][4] = pur.getPrice();
+            i++;
+//			if (pur.getDate().equals("Today")) {
+//				System.out.println(i + ". " + pur.getCustomer().getName() + " " + getGoodsNames(pur.getGoods()) + "\tPrice: " + pur.getPrice());
+//				i++;
+//			}
 		}
+        String[] columsNames = {"Id ", "Date", "Customer name", "Goods", "Price"};
+        JTable table = new JTable(data , columsNames);
+        TableColumn column = null;
+        column = table.getColumnModel().getColumn(0);
+        column.setPreferredWidth(25);
+        column = table.getColumnModel().getColumn(3);
+        column.setPreferredWidth(200);
+        JFrame frame = new JFrame("Transactions");
+        JPanel panel = new JPanel();
+        frame.setContentPane(panel);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        panel.setLayout(new BorderLayout());
+        panel.add(table.getTableHeader(), BorderLayout.PAGE_START);
+        panel.add(table,BorderLayout.CENTER);
+        frame.pack();
+        frame.setVisible(true);
+
 	}
 
 
