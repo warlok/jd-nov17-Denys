@@ -117,13 +117,16 @@ public class Market {
         column.setPreferredWidth(25);
         column = table.getColumnModel().getColumn(3);
         column.setPreferredWidth(200);
+        JScrollPane sp = new JScrollPane(table);
+        table.setFillsViewportHeight(true);
         JFrame frame = new JFrame("Transactions");
         JPanel panel = new JPanel();
         frame.setContentPane(panel);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        panel.setLayout(new BorderLayout());
-        panel.add(table.getTableHeader(), BorderLayout.PAGE_START);
-        panel.add(table,BorderLayout.CENTER);
+//        panel.setLayout(new BorderLayout());
+//        panel.add(table.getTableHeader(), BorderLayout.PAGE_START);
+//        panel.add(table,BorderLayout.CENTER);
+        panel.add(sp);
         frame.pack();
         frame.setVisible(true);
 
