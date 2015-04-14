@@ -95,7 +95,7 @@ public class Market {
 		return result;
 	}
 	
-	public void printTransactions() {
+	public JScrollPane printTransactions() {
 		int i = 1;
         Object[][] data = new Object[100][5];
 		for (Purchase pur : purchases) {
@@ -119,17 +119,17 @@ public class Market {
         column.setPreferredWidth(200);
         JScrollPane sp = new JScrollPane(table);
         table.setFillsViewportHeight(true);
-        JFrame frame = new JFrame("Transactions");
-        JPanel panel = new JPanel();
-        frame.setContentPane(panel);
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+//        JFrame frame = new JFrame("Transactions");
+//        JPanel panel = new JPanel();
+//        frame.setContentPane(panel);
+//        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 //        panel.setLayout(new BorderLayout());
 //        panel.add(table.getTableHeader(), BorderLayout.PAGE_START);
 //        panel.add(table,BorderLayout.CENTER);
-        panel.add(sp);
-        frame.pack();
-        frame.setVisible(true);
 
+//        frame.pack();
+//        frame.setVisible(true);
+    return sp;
 	}
 
 

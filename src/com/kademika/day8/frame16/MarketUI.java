@@ -17,7 +17,7 @@ import java.util.List;
 //import javax.swing.JTextArea;
 import javax.swing.*;
 
-public class MarketUI extends JPanel {
+public class MarketUI {
 
 	public MarketUI() {
         SplashScreen splashScreen = SplashScreen.getSplashScreen();
@@ -127,12 +127,29 @@ public class MarketUI extends JPanel {
 		newt.setPrice(5);
 		m.addAnimal(newt);
 		m.addOnStore(newt, 50);
-		
-		this.setLayout(new GridBagLayout());
+
+        final JPanel panel1 = new JPanel();
+        final JPanel panel2 = new JPanel();
+        panel2.add(m.printTransactions());
+        panel1.setLayout(new GridBagLayout());
+//        panel2.setLayout(new GridBagLayout());
 		final JFrame frame = new JFrame("Petshop");
 		frame.setBounds(350, 50, 300, 500);
-		frame.setContentPane(this);
+		frame.setContentPane(panel2);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JMenuBar menuBar = new JMenuBar();
+        JMenu menu = new JMenu("File");
+        JMenuItem menuItem = new JMenuItem("By birds");
+        menuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.setContentPane(panel1);
+                frame.pack();
+            }
+        });
+        menu.add(menuItem);
+        menuBar.add(menu);
+        frame.setJMenuBar(menuBar);
 		JLabel lable = new JLabel("Customer's Name:");
 		final JTextField text = new JTextField(10);
 		final Animal[] pets = { newt, aligator, frog, boa, sunfish,
@@ -149,30 +166,30 @@ public class MarketUI extends JPanel {
 		final JButton buy = new JButton("BUY");
 		JLabel lablePetsList = new JLabel("Choose an Animal:");
 		// this.add(lable);
-		this.add(lable, new GridBagConstraints(0, 0, 1, 1, 0, 0,
-				GridBagConstraints.LINE_START, 0, new Insets(0, 0, 0, 0), 0, 0));
-		this.add(text, new GridBagConstraints(1, 0, 1, 1, 0, 0,
-				GridBagConstraints.LINE_START, GridBagConstraints.HORIZONTAL,
-				new Insets(0, 0, 0, 0), 0, 0));
-		this.add(lablePetsList, new GridBagConstraints(0, 1, 1, 1, 0, 0,
-				GridBagConstraints.LINE_START, 0, new Insets(0, 0, 0, 0), 0, 0));
-		this.add(petList, new GridBagConstraints(1, 1, 1, 1, 0, 0,
-				GridBagConstraints.LINE_START, GridBagConstraints.HORIZONTAL,
-				new Insets(0, 0, 0, 0), 0, 0));
-		this.add(amountLable, new GridBagConstraints(0, 2, 1, 1, 0, 0,
-				GridBagConstraints.LINE_START, 0, new Insets(0, 0, 0, 0), 0, 0));
-		this.add(amountAnimals,
-				new GridBagConstraints(1, 2, 1, 1, 0, 0,
-						GridBagConstraints.LINE_START, 0,
-						new Insets(5, 0, 0, 0), 15, 7));
-		this.add(button,
-				new GridBagConstraints(1, 2, 1, 1, 0, 0,
-						GridBagConstraints.LINE_START, 0, new Insets(5, 47, 0,
-								0), 0, 0));
-		this.add(buy,
-				new GridBagConstraints(1, 3, 1, 1, 0, 0,
-						GridBagConstraints.LINE_START, 0, new Insets(50, 0, 0,
-								0), 0, 0));
+		panel1.add(lable, new GridBagConstraints(0, 0, 1, 1, 0, 0,
+                GridBagConstraints.LINE_START, 0, new Insets(0, 0, 0, 0), 0, 0));
+        panel1.add(text, new GridBagConstraints(1, 0, 1, 1, 0, 0,
+                GridBagConstraints.LINE_START, GridBagConstraints.HORIZONTAL,
+                new Insets(0, 0, 0, 0), 0, 0));
+        panel1.add(lablePetsList, new GridBagConstraints(0, 1, 1, 1, 0, 0,
+                GridBagConstraints.LINE_START, 0, new Insets(0, 0, 0, 0), 0, 0));
+        panel1.add(petList, new GridBagConstraints(1, 1, 1, 1, 0, 0,
+                GridBagConstraints.LINE_START, GridBagConstraints.HORIZONTAL,
+                new Insets(0, 0, 0, 0), 0, 0));
+        panel1.add(amountLable, new GridBagConstraints(0, 2, 1, 1, 0, 0,
+                GridBagConstraints.LINE_START, 0, new Insets(0, 0, 0, 0), 0, 0));
+        panel1.add(amountAnimals,
+                new GridBagConstraints(1, 2, 1, 1, 0, 0,
+                        GridBagConstraints.LINE_START, 0,
+                        new Insets(5, 0, 0, 0), 15, 7));
+        panel1.add(button,
+                new GridBagConstraints(1, 2, 1, 1, 0, 0,
+                        GridBagConstraints.LINE_START, 0, new Insets(5, 47, 0,
+                        0), 0, 0));
+        panel1.add(buy,
+                new GridBagConstraints(1, 3, 1, 1, 0, 0,
+                        GridBagConstraints.LINE_START, 0, new Insets(50, 0, 0,
+                        0), 0, 0));
 		button.addActionListener(new ActionListener() {
 
 			@Override
@@ -200,7 +217,10 @@ public class MarketUI extends JPanel {
 					System.out.println("\n\n\n\n");
 				}
 				m.sell("Today", cu, cu.getBucket());
-				m.printTransactions();
+                panel2.remove(0);
+                panel2.add(m.printTransactions());
+				frame.setContentPane(panel2);
+                frame.pack();
 
 			}
 		});
@@ -216,12 +236,6 @@ public class MarketUI extends JPanel {
 
 	public static void main(String[] args) {
 		new MarketUI();
-	}
-
-	@Override
-	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		repaint();
 	}
 
 	private Animal findAnimal(Animal[] array,String name) {
