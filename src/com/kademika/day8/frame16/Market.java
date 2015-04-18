@@ -5,6 +5,7 @@ import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.io.ObjectOutputStream.PutField;
 import java.util.Collections;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.ArrayList;
 
@@ -42,10 +43,6 @@ public class Market {
 		cust.clearBucket();
 		} else {System.out.println("Bucket is empty");}
 	}
-
-//	public void sell(Animal a) {
-//		store.takeFromStore(a);
-//	}
 
 	public void addOnStore(Animal a) {
 		store.getOnStore(a, 1);
@@ -100,36 +97,24 @@ public class Market {
         Object[][] data = new Object[100][5];
 		for (Purchase pur : purchases) {
             data[i-1][0] = i;
-            data[i-1][1] = "Today";
+            data[i-1][1] = pur.getDate();
             data[i-1][2] = pur.getCustomer().getName();
             data[i-1][3] = getGoodsNames(pur.getGoods());
             data[i-1][4] = pur.getPrice();
             i++;
-//			if (pur.getDate().equals("Today")) {
-//				System.out.println(i + ". " + pur.getCustomer().getName() + " " + getGoodsNames(pur.getGoods()) + "\tPrice: " + pur.getPrice());
-//				i++;
-//			}
 		}
         String[] columsNames = {"Id ", "Date", "Customer name", "Goods", "Price"};
         JTable table = new JTable(data , columsNames);
         TableColumn column = null;
         column = table.getColumnModel().getColumn(0);
         column.setPreferredWidth(25);
+        column = table.getColumnModel().getColumn(1);
+        column.setPreferredWidth(150);
         column = table.getColumnModel().getColumn(3);
         column.setPreferredWidth(200);
         JScrollPane sp = new JScrollPane(table);
         table.setFillsViewportHeight(true);
-//        JFrame frame = new JFrame("Transactions");
-//        JPanel panel = new JPanel();
-//        frame.setContentPane(panel);
-//        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-//        panel.setLayout(new BorderLayout());
-//        panel.add(table.getTableHeader(), BorderLayout.PAGE_START);
-//        panel.add(table,BorderLayout.CENTER);
-
-//        frame.pack();
-//        frame.setVisible(true);
-    return sp;
+        return sp;
 	}
 
 

@@ -7,37 +7,36 @@ import java.util.LinkedList;
 public class Store {
 
 	private ArrayList<Animal> animals = new ArrayList<>();
-	private int[] amount = new int[30];
 
 	public Store() {
 
 	}
 
 	public void getOnStore(Animal a, int n) {
-		amount[animals.indexOf(a)] += n;
+		a.setAmount(a.getAmount()+n);
 	}
 
 	public void takeFromStore(Animal a, int n) {
-		if (amount[animals.indexOf(a)] >= n) {
-			amount[animals.indexOf(a)] += n;
+		if (a.getAmount() >= n) {
+			a.setAmount(a.getAmount()-n);
 		} else {
-			System.out.println("There is only" + amount[animals.indexOf(a)] + " items");
+			System.out.println("There is only" + a.getAmount() + " items");
 		}
 	}
 
 	public void takeFromStore(Animal a) {
-		if (amount[animals.indexOf(a)] > 0) {
-		amount[animals.indexOf(a)]--;
+		if (a.getAmount() > 0) {
+		a.setAmount(a.getAmount()-1);
 		} else {
 			System.out.println("There is 0 items on Store");
 		}
 	}
 
 	public boolean checkAmount(Animal a) {
-		if (amount[animals.indexOf(a)] >= 3) {
+		if (a.getAmount() >= 3) {
 			return false;
 		}
-		System.out.println("There is only" + amount[animals.indexOf(a)] + " items" );
+		System.out.println("There is only" + a.getAmount() + " items" );
 		return true;
 	}
 	
@@ -51,7 +50,7 @@ public class Store {
 
 	public void printStore() {
 			for (Animal a : animals) {
-				System.out.println("Name: " + a.getName() + "\tAmount: " + amount[animals.indexOf(a)]);
+				System.out.println("Name: " + a.getName() + "\tAmount: " + a.getAmount());
 			}
 	}
 

@@ -4,7 +4,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.Console;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -18,6 +20,8 @@ import java.util.List;
 import javax.swing.*;
 
 public class MarketUI {
+
+    SimpleDateFormat sdfDate = new SimpleDateFormat("MM.dd.yyyy hh:mm");
 
 	public MarketUI() {
         SplashScreen splashScreen = SplashScreen.getSplashScreen();
@@ -132,7 +136,6 @@ public class MarketUI {
         final JPanel panel2 = new JPanel();
         panel2.add(m.printTransactions());
         panel1.setLayout(new GridBagLayout());
-//        panel2.setLayout(new GridBagLayout());
 		final JFrame frame = new JFrame("Petshop");
 		frame.setBounds(350, 50, 300, 500);
 		frame.setContentPane(panel2);
@@ -165,7 +168,6 @@ public class MarketUI {
 		final JButton button = new JButton("Add");
 		final JButton buy = new JButton("BUY");
 		JLabel lablePetsList = new JLabel("Choose an Animal:");
-		// this.add(lable);
 		panel1.add(lable, new GridBagConstraints(0, 0, 1, 1, 0, 0,
                 GridBagConstraints.LINE_START, 0, new Insets(0, 0, 0, 0), 0, 0));
         panel1.add(text, new GridBagConstraints(1, 0, 1, 1, 0, 0,
@@ -194,7 +196,7 @@ public class MarketUI {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Customer c;
+                Customer c;
 				if (!cust.isEmpty() && cust.getFirst().getName().equals(text.getText())) {
 					c = cust.getFirst();
 				} else {
@@ -203,7 +205,6 @@ public class MarketUI {
 					cust.addFirst(c);
 				}
 				int counts = Integer.valueOf(amountAnimals.getText());
-//				c.addOnBucket( (Animal) petList.getSelectedItem(),counts);
 				c.addOnBucket( findAnimal(pets, (String) petList.getSelectedItem()),counts);
 			}
 		});
@@ -216,7 +217,9 @@ public class MarketUI {
 				for (int i=0; i<100; i++) {
 					System.out.println("\n\n\n\n");
 				}
-				m.sell("Today", cu, cu.getBucket());
+				m.sell(sdfDate.format(new Date()), cu, cu.getBucket());
+                m.printStore();
+                m.printCatalog();
                 panel2.remove(0);
                 panel2.add(m.printTransactions());
 				frame.setContentPane(panel2);
